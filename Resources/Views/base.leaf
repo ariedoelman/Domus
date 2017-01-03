@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    #import("head")
+#import("head")
+<title>Domus</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/styles/normalize.css">
+<link rel="stylesheet" href="/styles/skeleton.css">
+<link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">"
 </head>
-    <body>
-        #import("body")
-    </body>
+<body>
+<div class="container">
+#import("body")
+</div>
+</body>
 </html>

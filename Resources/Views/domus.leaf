@@ -1,0 +1,35 @@
+#extend("base")
+
+#export("head") {
+<meta charset="utf-8">
+<title>WebSockets Demo</title>
+}
+    
+#export("body") {
+<h1>Sensor data</h1>
+<div class="row">
+  <div class="three columns">Temperature (Celsius):</div>
+  <div id="temperature" class="nine columns"></div>
+</div>
+<div class="row">
+  <div class="three columns">Humidity (Percentage):</div>
+  <div id="humidity" class="nine columns"></div>
+</div>
+<div class="row">
+  <div class="three columns">Light:</div>
+  <div id="light" class="nine columns"></div>
+</div>
+<div class="row">
+  <div class="three columns">Distance (in cm):</div>
+  <div id="distance" class="nine columns"></div>
+</div>
+<div class="row">
+  <div class="three columns">Sound level:</div>
+  <div id="soundlevel" class="nine columns"></div>
+</div>
+
+<script language="javascript" type="text/javascript">
+var wsUri = "#(wsurl)"
+</script>
+<script src="/scripts/app.js"></script>
+}
