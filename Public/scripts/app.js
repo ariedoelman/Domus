@@ -25,11 +25,14 @@ window.onload = function() {
   socket.onmessage = function(event) {
     var message = event.data;
     console.log('Received message: '+message);
-    var field = document.getElementById(message);
+    var idValue = message.split('=', 2);
+    var fieldId = idValue[0];
+    var fieldValue = idValue[1];
+    var field = document.getElementById(fieldId);
     if (field) {
-      field.innerHTML = 'Received data!'
+      field.innerHTML = fieldValue;
     } else {
-      console.log('Unknown id: '+message);
+      console.log('Unknown id: '+fieldName);
     }
   };
 

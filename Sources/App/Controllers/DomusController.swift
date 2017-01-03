@@ -47,10 +47,10 @@ public final class DomusController: TextInputHandler {
     sendingUpdates = true
     usleep(3_000_000)
     do {
-      guard try outputHandler.send(text: "temperature") else {
+      guard try outputHandler.send(text: String(key: "temperature", value: -1.0)) else {
         return
       }
-      guard try outputHandler.send(text: "humidity") else {
+      guard try outputHandler.send(text: String(key: "humidity", value: 99.9)) else {
         return
       }
       sendingUpdates = false
@@ -61,4 +61,10 @@ public final class DomusController: TextInputHandler {
     }
   }
 
+}
+
+private extension String {
+  init(key: String, value: Float) {
+    self.init("\(key)=\(value)")!
+  }
 }
