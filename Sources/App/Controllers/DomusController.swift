@@ -13,6 +13,7 @@
 import Foundation
 import Vapor
 import HTTP
+import Socks
 
 public final class DomusController: TextInputHandler {
   private let outputHandler: TextOutputHandler
@@ -34,8 +35,11 @@ public final class DomusController: TextInputHandler {
 
   private func showDomusView(request: Request) throws -> ResponseRepresentable {
     start()
+//    print("showDomusView(request: Request) request.uri: \(request.uri), request.uri.host \(request.uri.host), request.uri.port \(request.uri.port)")
+    let host = request.uri.host
+    let portExtension = request.uri.port != nil ? ":\(request.uri.port!)" : ""
     return try drop.view.make("domus", [
-      "wsurl": "ws://localhost:8080/ws"])
+      "wsuri": "ws://\(host)\(portExtension)/ws"])
   }
 
   private func start() {

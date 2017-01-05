@@ -1,6 +1,11 @@
 import Vapor
+import Socks
 
 let drop = Droplet()
+
+//let serverHost: String = drop.config["servers", "default", "host"]!.string!
+//let serverPort: UInt = drop.config["servers", "default", "port"]!.uint!
+//let serverAddress: InternetAddress = InternetAddress(hostname: serverHost, port: Port(serverPort))
 
 if drop.environment == .development {
   (drop.view as? LeafRenderer)?.stem.cache = nil

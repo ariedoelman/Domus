@@ -29,7 +29,7 @@
 </div>
 
 <script language="javascript" type="text/javascript">
-var wsUri = "#(wsurl)"
+var wsUri = "#(wsuri)"
 </script>
 <script src="/scripts/app.js"></script>
 }
