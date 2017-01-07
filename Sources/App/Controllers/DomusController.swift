@@ -19,6 +19,7 @@ public final class DomusController: TextInputHandler {
   private let outputHandler: TextOutputHandler
   private let operationQueue: OperationQueue
   private var sendingUpdates: Bool = false
+  private var sensors: GrovePiSensors!
 
   public init(outputHandler: TextOutputHandler) {
     self.outputHandler = outputHandler
@@ -34,16 +35,18 @@ public final class DomusController: TextInputHandler {
   }
 
   private func showDomusView(request: Request) throws -> ResponseRepresentable {
-    start()
-//    print("showDomusView(request: Request) request.uri: \(request.uri), request.uri.host \(request.uri.host), request.uri.port \(request.uri.port)")
+    try start()
     let host = request.uri.host
     let portExtension = request.uri.port != nil ? ":\(request.uri.port!)" : ""
     return try drop.view.make("domus", [
       "wsuri": "ws://\(host)\(portExtension)/ws"])
   }
 
-  private func start() {
+  private func start() throws {
     guard !sendingUpdates else { return }
+    if sensors == nil {
+      sensors = try GrovePiSensors()
+    }
     operationQueue.addOperation(doSendStatus)
   }
 
@@ -51,10 +54,12 @@ public final class DomusController: TextInputHandler {
     sendingUpdates = true
     usleep(3_000_000)
     do {
-      guard try outputHandler.send(text: String(key: "temperature", value: -1.0)) else {
-        return
-      }
-      guard try outputHandler.send(text: String(key: "humidity", value: 99.9)) else {
+      let sensorUpdates: [String] = [
+          String(key: "temperature", value: try sensors.readTemperature()),
+          String(key: "humidity", value: try sensors.readHumidity()),
+          String(key: "distance", value: try sensors.readDistanceInCentimeters())
+      ]
+      guard (try sensorUpdates.first { return !(try outputHandler.send(text: $0)) }) == nil else {
         return
       }
       sendingUpdates = false
@@ -69,6 +74,9 @@ public final class DomusController: TextInputHandler {
 
 private extension String {
   init(key: String, value: Float) {
+    self.init("\(key)=\(value)")!
+  }
+  init(key: String, value: UInt16) {
     self.init("\(key)=\(value)")!
   }
 }
