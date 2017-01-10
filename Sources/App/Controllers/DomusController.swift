@@ -62,6 +62,26 @@ public final class DomusController: TextInputHandler {
     }
   }
 
+  public func opened() {
+    print("Websocket opened")
+    do {
+      let sensorUpdates: [String] = [
+        String(key: "temperature", value: try sensors.readTemperature()),
+        String(key: "humidity", value: try sensors.readHumidity()),
+        String(key: "distance", value: try sensors.readDistanceInCentimeters())
+      ]
+      guard (try sensorUpdates.first { return !(try outputHandler.send(text: $0)) }) == nil else {
+        return
+      }
+    } catch {
+      print("Encountered error while updating counters: \(error)")
+    }
+  }
+
+  public func closed() {
+    print("Websocket closed")
+  }
+
 //  private func doSendStatus() {
 //    sendingUpdates = true
 //    usleep(3_000_000)

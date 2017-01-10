@@ -21,7 +21,7 @@ public final class WebsocketController: TextOutputHandler {
   }
 
   private func openWebsocket(request req: Request, websocket ws: WebSocket) throws {
-    print("New \(ws) connected!")
+    inputHandler.opened()
     websocket = ws
 
     // ping the socket to keep it open
@@ -37,8 +37,8 @@ public final class WebsocketController: TextOutputHandler {
     }
 
     ws.onClose = { ws, code, reason, clean in
-      print("\(ws) closed with code \"\(code)\" and reason \"\(reason)\" (clean: \(clean))!")
       self.websocket = nil
+      self.inputHandler.closed()
     }
   }
 
