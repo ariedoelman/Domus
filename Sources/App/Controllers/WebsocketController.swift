@@ -21,9 +21,7 @@ public final class WebsocketController: TextOutputHandler {
   }
 
   private func openWebsocket(request req: Request, websocket ws: WebSocket) throws {
-    inputHandler.opened()
     websocket = ws
-
     // ping the socket to keep it open
     try background {
       while ws.state == .open {
@@ -40,6 +38,8 @@ public final class WebsocketController: TextOutputHandler {
       self.websocket = nil
       self.inputHandler.closed()
     }
+
+    inputHandler.opened()
   }
 
   public func send(text: String) throws -> Bool {
