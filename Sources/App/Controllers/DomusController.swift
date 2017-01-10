@@ -14,16 +14,16 @@ import Foundation
 import Vapor
 import HTTP
 import Socks
+import GrovePiIO
 
 public final class DomusController: TextInputHandler {
   private let outputHandler: TextOutputHandler
-  private let operationQueue: OperationQueue
-  private var sendingUpdates: Bool = false
   private var sensors: GrovePiSensors!
+  private var thReportID: ChangeReportID?
+  private var distanceReportID: ChangeReportID?
 
   public init(outputHandler: TextOutputHandler) {
     self.outputHandler = outputHandler
-    operationQueue = OperationQueue()
   }
 
   public func addRoutes(to droplet: Droplet) {
@@ -43,32 +43,44 @@ public final class DomusController: TextInputHandler {
   }
 
   private func start() throws {
-    guard !sendingUpdates else { return }
     if sensors == nil {
       sensors = try GrovePiSensors()
     }
-    operationQueue.addOperation(doSendStatus)
-  }
-
-  private func doSendStatus() {
-    sendingUpdates = true
-    usleep(3_000_000)
-    do {
-      let sensorUpdates: [String] = [
-          String(key: "temperature", value: try sensors.readTemperature()),
-          String(key: "humidity", value: try sensors.readHumidity()),
-          String(key: "distance", value: try sensors.readDistanceInCentimeters())
-      ]
-      guard (try sensorUpdates.first { return !(try outputHandler.send(text: $0)) }) == nil else {
-        return
+    if thReportID == nil {
+      thReportID = sensors.onTemperatureAndHumidityChange { (temp, humi) in
+        do {
+          guard try self.outputHandler.send(text: String(key: "temperature", value: temp)),
+              try self.outputHandler.send(text: String(key: "humidity", value: humi))
+            else {
+              self.thReportID?.cancel()
+              return
+          }
+        } catch {
+          print("Stopped sending temperature and humidity status")
+        }
       }
-      sendingUpdates = false
-      operationQueue.addOperation(doSendStatus)
-    } catch {
-      sendingUpdates = false
-      print("Stopped sending status")
     }
   }
+
+//  private func doSendStatus() {
+//    sendingUpdates = true
+//    usleep(3_000_000)
+//    do {
+//      let sensorUpdates: [String] = [
+//          String(key: "temperature", value: try sensors.readTemperature()),
+//          String(key: "humidity", value: try sensors.readHumidity()),
+//          String(key: "distance", value: try sensors.readDistanceInCentimeters())
+//      ]
+//      guard (try sensorUpdates.first { return !(try outputHandler.send(text: $0)) }) == nil else {
+//        return
+//      }
+//      sendingUpdates = false
+//      operationQueue.addOperation(doSendStatus)
+//    } catch {
+//      sendingUpdates = false
+//      print("Stopped sending status")
+//    }
+//  }
 
 }
 

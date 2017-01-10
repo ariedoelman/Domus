@@ -18,15 +18,23 @@ public final class GrovePiSensors {
   }
 
   public func readTemperature() throws -> Float {
-    return try thSensor.readTH().temperature
+    return try thSensor.readTemperatureAndHumidity().temperature
   }
 
   public func readHumidity() throws -> Float {
-    return try thSensor.readTH().humidity
+    return try thSensor.readTemperatureAndHumidity().humidity
   }
 
   public func readDistanceInCentimeters() throws -> UInt16 {
     return try urSensor.readCentimeters()
+  }
+
+  public func onTemperatureAndHumidityChange(report: @escaping ((Float, Float)) -> ()) -> ChangeReportID {
+    return thSensor.onChange(report: report)
+  }
+
+  public func onDistanceChange(report: @escaping (UInt16) -> ()) -> ChangeReportID {
+    return urSensor.onChange(report: report)
   }
 
 }
