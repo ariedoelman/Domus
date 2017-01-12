@@ -46,45 +46,45 @@ public final class DomusController: TextInputHandler {
     if sensors == nil {
       sensors = try GrovePiSensors()
     }
-    if thReportID == nil {
-      thReportID = sensors.onTemperatureAndHumidityChange { (temp, humi) in
-        do {
-          guard try self.outputHandler.send(text: String(key: "temperature", value: temp)),
-              try self.outputHandler.send(text: String(key: "humidity", value: humi))
-            else {
-              self.thReportID?.cancel()
-              return
-          }
-        } catch {
-          print("Stopped sending temperature and humidity status")
-        }
-      }
-    }
   }
 
   public func opened() {
     print("Websockets opened")
-    OperationQueue().addOperation(doSendStatus)
+    thReportID?.cancel() // just to be absolutely sure no two are running at the same time
+    thReportID = sensors.onTemperatureAndHumidityChange { (temp, humi) in
+      do {
+        guard try self.outputHandler.send(text: String(key: "temperature", value: temp)),
+          try self.outputHandler.send(text: String(key: "humidity", value: humi))
+          else {
+            self.thReportID?.cancel()
+            return
+        }
+      } catch {
+        print("Stopped sending temperature and humidity status")
+      }
+    }
   }
 
   public func closed() {
     print("Websocket closed")
+    thReportID?.cancel()
+    thReportID = nil
   }
 
-  private func doSendStatus() {
-    do {
-      let sensorUpdates: [String] = [
-          String(key: "temperature", value: try sensors.readTemperature()),
-          String(key: "humidity", value: try sensors.readHumidity()),
-          String(key: "distance", value: try sensors.readDistanceInCentimeters())
-      ]
-      guard (try sensorUpdates.first { return !(try outputHandler.send(text: $0)) }) == nil else {
-        return
-      }
-    } catch {
-      print("Stopped sending status")
-    }
-  }
+//  private func doSendStatus() {
+//    do {
+//      let sensorUpdates: [String] = [
+//          String(key: "temperature", value: try sensors.readTemperature()),
+//          String(key: "humidity", value: try sensors.readHumidity()),
+//          String(key: "distance", value: try sensors.readDistanceInCentimeters())
+//      ]
+//      guard (try sensorUpdates.first { return !(try outputHandler.send(text: $0)) }) == nil else {
+//        return
+//      }
+//    } catch {
+//      print("Stopped sending status")
+//    }
+//  }
 
 }
 
