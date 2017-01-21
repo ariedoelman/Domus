@@ -18,9 +18,7 @@ import GrovePiIO
 
 public final class DomusController: TextInputHandler {
   private let outputHandler: TextOutputHandler
-  private var sensors: GrovePiSensors!
-  private var thReportID: ChangeReportID?
-  private var distanceReportID: ChangeReportID?
+  private var sensors: GrovePiSensors?
 
   public init(outputHandler: TextOutputHandler) {
     self.outputHandler = outputHandler
@@ -50,25 +48,28 @@ public final class DomusController: TextInputHandler {
 
   public func opened() {
     print("Websockets opened")
-    thReportID?.cancel() // just to be absolutely sure no two are running at the same time
-    thReportID = sensors.onTemperatureAndHumidityChange { (temp, humi) in
-      do {
-        guard try self.outputHandler.send(text: String(key: "temperature", value: temp)),
-          try self.outputHandler.send(text: String(key: "humidity", value: humi))
-          else {
-            self.thReportID?.cancel()
-            return
+    do {
+      try sensors?.onTemperatureAndHumidityChange { th in
+        do {
+          guard try self.outputHandler.send(text: String(key: "temperature", value: th.temperature)),
+            try self.outputHandler.send(text: String(key: "humidity", value: th.humidity))
+            else {
+              print("Unable to output \(th)")
+              self.sensors?.cancelTemperatureAndHumidityChangeReport()
+              return
+          }
+        } catch {
+          print("Stopped sending temperature and humidity status, due to error \(error)")
         }
-      } catch {
-        print("Stopped sending temperature and humidity status")
       }
+
+    } catch {
+      print("Failed to setup sensors status reports due to error: \(error)")
     }
   }
 
   public func closed() {
     print("Websocket closed")
-    thReportID?.cancel()
-    thReportID = nil
   }
 
 //  private func doSendStatus() {
