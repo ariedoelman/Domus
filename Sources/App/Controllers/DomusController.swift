@@ -48,13 +48,23 @@ public final class DomusController: TextInputHandler {
 
   public func opened() {
     print("Websockets opened")
+    receiveTemperatureAndHumidityChanges()
+    receiveDistanceChanges()
+  }
+
+  public func closed() {
+    print("Websocket closed")
+    sensors?.cancelAllReports()
+  }
+
+  private func receiveTemperatureAndHumidityChanges() {
     do {
       try sensors?.onTemperatureAndHumidityChange { th in
         do {
           guard try self.outputHandler.send(text: String(key: "temperature", value: th.temperature)),
             try self.outputHandler.send(text: String(key: "humidity", value: th.humidity))
             else {
-              print("Unable to output \(th)")
+              print("Unable to output temperature and humidity: \(th)")
               self.sensors?.cancelTemperatureAndHumidityChangeReport()
               return
           }
@@ -62,14 +72,28 @@ public final class DomusController: TextInputHandler {
           print("Stopped sending temperature and humidity status, due to error \(error)")
         }
       }
-
     } catch {
-      print("Failed to setup sensors status reports due to error: \(error)")
+      print("Failed to setup temperature and humidity sensor continuous status report due to error: \(error)")
     }
   }
 
-  public func closed() {
-    print("Websocket closed")
+  private func receiveDistanceChanges() {
+    do {
+      try sensors?.onDistanceChange { distance in
+        do {
+          guard try self.outputHandler.send(text: String(key: "distance", value: distance))
+            else {
+              print("Unable to output distance: \(distance)")
+              self.sensors?.cancelDistanceChangeReport()
+              return
+          }
+        } catch {
+          print("Stopped sending distance status, due to error \(error)")
+        }
+      }
+    } catch {
+      print("Failed to setup distance sensor continuous status report due to error: \(error)")
+    }
   }
 
 //  private func doSendStatus() {

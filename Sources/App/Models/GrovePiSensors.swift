@@ -32,7 +32,7 @@ public final class GrovePiSensors {
     return try thSensor.readValue().humidity
   }
 
-  public func readDistanceInCentimeters() throws -> UInt16 {
+  public func readDistanceInCentimeters() throws -> DistanceInCentimeters {
     return try urSensor.readValue()
   }
 
@@ -60,6 +60,11 @@ public final class GrovePiSensors {
       self.urReporter = nil
       try? urSensor.removeValueChangedDelegate(urReporter)
     }
+  }
+
+  public func cancelAllReports() {
+    cancelTemperatureAndHumidityChangeReport()
+    cancelDistanceChangeReport()
   }
 
 }
