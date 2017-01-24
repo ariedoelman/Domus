@@ -75,6 +75,8 @@ public final class DomusController: TextInputHandler {
         }
       }
     } catch {
+      _ = try? self.outputHandler.send(text: String(key: "temperature", value: error))
+      _ = try? self.outputHandler.send(text: String(key: "humidity", value: error))
       print("Failed to setup temperature and humidity sensor continuous status report due to error: \(error)")
     }
   }
@@ -94,6 +96,7 @@ public final class DomusController: TextInputHandler {
         }
       }
     } catch {
+      _ = try? self.outputHandler.send(text: String(key: "distance", value: error))
       print("Failed to setup distance sensor continuous status report due to error: \(error)")
     }
   }
@@ -113,6 +116,7 @@ public final class DomusController: TextInputHandler {
         }
       }
     } catch {
+      _ = try? self.outputHandler.send(text: String(key: "light", value: error))
       print("Failed to setup light sensor continuous status report due to error: \(error)")
     }
   }
@@ -132,6 +136,7 @@ public final class DomusController: TextInputHandler {
         }
       }
     } catch {
+      _ = try? self.outputHandler.send(text: String(key: "soundlevel", value: error))
       print("Failed to setup sound sensor continuous status report due to error: \(error)")
     }
   }
@@ -158,6 +163,9 @@ private extension String {
     self.init("\(key)=\(value)")!
   }
   init(key: String, value: UInt16) {
+    self.init("\(key)=\(value)")!
+  }
+  init(key: String, value: Error) {
     self.init("\(key)=\(value)")!
   }
 }
