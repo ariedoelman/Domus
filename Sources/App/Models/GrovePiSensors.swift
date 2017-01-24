@@ -11,13 +11,19 @@ import Foundation
 public final class GrovePiSensors {
   private let thSensor: TemperatureAndHumiditySensorSource
   private let urSensor: UltrasonicRangerSensorSource
+  private let lightSensor: LightSensorSource
+  private let soundSensor: SoundSensorSource
   private var thReporter: InputValueChangedReporter<TemperatureAndHumidity>?
   private var urReporter: InputValueChangedReporter<DistanceInCentimeters>?
+  private var lightReporter: InputValueChangedReporter<Range1024>?
+  private var soundReporter: InputValueChangedReporter<Range1024>?
 
   public init() throws {
     let bus = try GrovePiBus.connectBus()
     thSensor = try bus.connectTemperatureAndHumiditySensor(to: .D7, moduleType: .blue, sampleTimeInterval: 60)
     urSensor = try bus.connectUltrasonicRangerSensor(portLabel: .D3, sampleTimeInterval: 60)
+    lightSensor = try bus.connectLightSensor(portLabel: .A0)
+    soundSensor = try bus.connectSoundSensor(portLabel: .A1)
   }
 
   deinit {
@@ -62,9 +68,37 @@ public final class GrovePiSensors {
     }
   }
 
+  public func onLightChange(report: @escaping (Range1024) -> ()) throws {
+    guard lightReporter == nil else { return }
+    lightReporter = InputValueChangedReporter(reportNewInput: report)
+    try lightSensor.addValueChangedDelegate(lightReporter!)
+  }
+
+  public func cancelLightChangeReport() {
+    if let lightReporter = self.lightReporter {
+      self.lightReporter = nil
+      try? lightSensor.removeValueChangedDelegate(lightReporter)
+    }
+  }
+
+  public func onSoundChange(report: @escaping (Range1024) -> ()) throws {
+    guard soundReporter == nil else { return }
+    soundReporter = InputValueChangedReporter(reportNewInput: report)
+    try soundSensor.addValueChangedDelegate(soundReporter!)
+  }
+
+  public func cancelSoundChangeReport() {
+    if let soundReporter = self.soundReporter {
+      self.soundReporter = nil
+      try? soundSensor.removeValueChangedDelegate(soundReporter)
+    }
+  }
+  
   public func cancelAllReports() {
     cancelTemperatureAndHumidityChangeReport()
     cancelDistanceChangeReport()
+    cancelLightChangeReport()
+    cancelSoundChangeReport()
   }
 
 }

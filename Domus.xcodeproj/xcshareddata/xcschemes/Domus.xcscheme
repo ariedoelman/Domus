@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_1421"
+               BlueprintIdentifier = "OBJ_1449"
                BuildableName = "Core.framework"
                BlueprintName = "Core"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_1457"
+               BlueprintIdentifier = "OBJ_1485"
                BuildableName = "libc.framework"
                BlueprintName = "libc"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -42,7 +42,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_1464"
+               BlueprintIdentifier = "OBJ_1492"
                BuildableName = "CLibreSSL.framework"
                BlueprintName = "CLibreSSL"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -56,7 +56,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2087"
+               BlueprintIdentifier = "OBJ_2115"
                BuildableName = "BCrypt.framework"
                BlueprintName = "BCrypt"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -70,7 +70,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2106"
+               BlueprintIdentifier = "OBJ_2134"
                BuildableName = "Cipher.framework"
                BlueprintName = "Cipher"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -84,7 +84,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2103"
+               BlueprintIdentifier = "OBJ_2131"
                BuildableName = "Essentials.framework"
                BlueprintName = "Essentials"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -98,7 +98,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2135"
+               BlueprintIdentifier = "OBJ_2163"
                BuildableName = "Hash.framework"
                BlueprintName = "Hash"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -112,7 +112,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2154"
+               BlueprintIdentifier = "OBJ_2182"
                BuildableName = "HMAC.framework"
                BlueprintName = "HMAC"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -126,7 +126,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2105"
+               BlueprintIdentifier = "OBJ_2133"
                BuildableName = "Random.framework"
                BlueprintName = "Random"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -140,7 +140,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2188"
+               BlueprintIdentifier = "OBJ_2216"
                BuildableName = "PathIndexable.framework"
                BlueprintName = "PathIndexable"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -154,7 +154,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2196"
+               BlueprintIdentifier = "OBJ_2224"
                BuildableName = "Polymorphic.framework"
                BlueprintName = "Polymorphic"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -168,7 +168,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2204"
+               BlueprintIdentifier = "OBJ_2232"
                BuildableName = "Node.framework"
                BlueprintName = "Node"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -182,7 +182,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2236"
+               BlueprintIdentifier = "OBJ_2264"
                BuildableName = "Fluent.framework"
                BlueprintName = "Fluent"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -196,7 +196,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2283"
+               BlueprintIdentifier = "OBJ_2311"
                BuildableName = "FluentTester.framework"
                BlueprintName = "FluentTester"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -210,7 +210,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2305"
+               BlueprintIdentifier = "OBJ_2333"
                BuildableName = "Socks.framework"
                BlueprintName = "Socks"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -224,7 +224,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2318"
+               BlueprintIdentifier = "OBJ_2346"
                BuildableName = "SocksCore.framework"
                BlueprintName = "SocksCore"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -238,7 +238,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2339"
+               BlueprintIdentifier = "OBJ_2367"
                BuildableName = "TLS.framework"
                BlueprintName = "TLS"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -252,7 +252,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2362"
+               BlueprintIdentifier = "OBJ_2390"
                BuildableName = "HTTP.framework"
                BlueprintName = "HTTP"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -266,7 +266,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2436"
+               BlueprintIdentifier = "OBJ_2464"
                BuildableName = "SMTP.framework"
                BlueprintName = "SMTP"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -280,7 +280,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2435"
+               BlueprintIdentifier = "OBJ_2463"
                BuildableName = "Transport.framework"
                BlueprintName = "Transport"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -294,7 +294,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2433"
+               BlueprintIdentifier = "OBJ_2461"
                BuildableName = "URI.framework"
                BlueprintName = "URI"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -308,7 +308,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2566"
+               BlueprintIdentifier = "OBJ_2594"
                BuildableName = "WebSockets.framework"
                BlueprintName = "WebSockets"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -322,7 +322,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2616"
+               BlueprintIdentifier = "OBJ_2644"
                BuildableName = "Console.framework"
                BlueprintName = "Console"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -336,7 +336,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2662"
+               BlueprintIdentifier = "OBJ_2690"
                BuildableName = "Jay.framework"
                BlueprintName = "Jay"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -350,7 +350,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2689"
+               BlueprintIdentifier = "OBJ_2717"
                BuildableName = "JSON.framework"
                BlueprintName = "JSON"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -364,7 +364,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2715"
+               BlueprintIdentifier = "OBJ_2743"
                BuildableName = "Turnstile.framework"
                BlueprintName = "Turnstile"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -378,7 +378,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2736"
+               BlueprintIdentifier = "OBJ_2764"
                BuildableName = "TurnstileCrypto.framework"
                BlueprintName = "TurnstileCrypto"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -392,7 +392,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2745"
+               BlueprintIdentifier = "OBJ_2773"
                BuildableName = "TurnstileWeb.framework"
                BlueprintName = "TurnstileWeb"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -406,7 +406,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2763"
+               BlueprintIdentifier = "OBJ_2791"
                BuildableName = "Leaf.framework"
                BlueprintName = "Leaf"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -420,7 +420,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2813"
+               BlueprintIdentifier = "OBJ_2841"
                BuildableName = "HTTPRouting.framework"
                BlueprintName = "HTTPRouting"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -434,7 +434,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2866"
+               BlueprintIdentifier = "OBJ_2894"
                BuildableName = "Routing.framework"
                BlueprintName = "Routing"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -448,7 +448,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2921"
+               BlueprintIdentifier = "OBJ_2949"
                BuildableName = "TypeSafeRouting.framework"
                BlueprintName = "TypeSafeRouting"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -462,7 +462,35 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_2974"
+               BlueprintIdentifier = "OBJ_3002"
+               BuildableName = "FormData.framework"
+               BlueprintName = "FormData"
+               ReferencedContainer = "container:Domus.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "OBJ_3048"
+               BuildableName = "Multipart.framework"
+               BlueprintName = "Multipart"
+               ReferencedContainer = "container:Domus.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "OBJ_3094"
                BuildableName = "Auth.framework"
                BlueprintName = "Auth"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -476,7 +504,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_3064"
+               BlueprintIdentifier = "OBJ_3188"
                BuildableName = "Cache.framework"
                BlueprintName = "Cache"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -490,7 +518,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_3062"
+               BlueprintIdentifier = "OBJ_3186"
                BuildableName = "Cookies.framework"
                BlueprintName = "Cookies"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -504,7 +532,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_3217"
+               BlueprintIdentifier = "OBJ_3349"
                BuildableName = "Sessions.framework"
                BlueprintName = "Sessions"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -518,7 +546,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_3295"
+               BlueprintIdentifier = "OBJ_3431"
                BuildableName = "Settings.framework"
                BlueprintName = "Settings"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -532,7 +560,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_3375"
+               BlueprintIdentifier = "OBJ_3515"
                BuildableName = "Vapor.framework"
                BlueprintName = "Vapor"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -546,7 +574,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_3545"
+               BlueprintIdentifier = "OBJ_3691"
                BuildableName = "GrovePiIO.framework"
                BlueprintName = "GrovePiIO"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -560,7 +588,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_3572"
+               BlueprintIdentifier = "OBJ_3730"
                BuildableName = "App"
                BlueprintName = "App"
                ReferencedContainer = "container:Domus.xcodeproj">
@@ -591,7 +619,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "OBJ_1421"
+            BlueprintIdentifier = "OBJ_1449"
             BuildableName = "Core.framework"
             BlueprintName = "Core"
             ReferencedContainer = "container:Domus.xcodeproj">

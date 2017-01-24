@@ -50,6 +50,8 @@ public final class DomusController: TextInputHandler {
     print("Websockets opened")
     receiveTemperatureAndHumidityChanges()
     receiveDistanceChanges()
+    receiveLightChanges()
+    receiveSoundChanges()
   }
 
   public func closed() {
@@ -93,6 +95,44 @@ public final class DomusController: TextInputHandler {
       }
     } catch {
       print("Failed to setup distance sensor continuous status report due to error: \(error)")
+    }
+  }
+
+  private func receiveLightChanges() {
+    do {
+      try sensors?.onLightChange { lightLevel in
+        do {
+          guard try self.outputHandler.send(text: String(key: "light", value: lightLevel))
+            else {
+              print("Unable to output light: \(lightLevel)")
+              self.sensors?.cancelLightChangeReport()
+              return
+          }
+        } catch {
+          print("Stopped sending light status, due to error \(error)")
+        }
+      }
+    } catch {
+      print("Failed to setup light sensor continuous status report due to error: \(error)")
+    }
+  }
+
+  private func receiveSoundChanges() {
+    do {
+      try sensors?.onSoundChange { soundLevel in
+        do {
+          guard try self.outputHandler.send(text: String(key: "soundlevel", value: soundLevel))
+            else {
+              print("Unable to output sound: \(soundLevel)")
+              self.sensors?.cancelSoundChangeReport()
+              return
+          }
+        } catch {
+          print("Stopped sending sound status, due to error \(error)")
+        }
+      }
+    } catch {
+      print("Failed to setup sound sensor continuous status report due to error: \(error)")
     }
   }
 
