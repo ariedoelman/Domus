@@ -7,6 +7,7 @@
     
 #export("body") {
 <h1>Sensor data</h1>
+<!--
 <div class="row">
   <div class="three columns">Temperature (Celsius):</div>
   <div id="temperature" class="nine columns"></div>
@@ -17,7 +18,7 @@
 </div>
 <div class="row">
   <div class="three columns">Light:</div>
-  <div id="light" class="nine columns"></div>
+  <div id="lightlevel" class="nine columns"></div>
 </div>
 <div class="row">
   <div class="three columns">Distance (in cm):</div>
@@ -27,6 +28,28 @@
   <div class="three columns">Sound level:</div>
   <div id="soundlevel" class="nine columns"></div>
 </div>
+ -->
+
+<table class="u-full-width">
+  <thead>
+    <tr>
+      <th>Port</th>
+      <th>Unit</th>
+      <th>Status</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    #loop(portconnections, "portconnection") {
+    <tr>
+      <td>#(portconnection.port)</td>
+      <td>#(portconnection.unit)</td>
+      <td>#(portconnection.status)</td>
+      <td><div id="#(portconnection.value)"></div></td>
+    </tr>
+    }
+  </tbody>
+</table>
 
 <script language="javascript" type="text/javascript">
 var wsUri = "#(wsuri)"

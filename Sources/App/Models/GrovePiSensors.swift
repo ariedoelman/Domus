@@ -7,6 +7,31 @@
 //
 import GrovePiIO
 import Foundation
+import Vapor
+
+public struct PortConnectionDescription: NodeRepresentable {
+  public let port: String
+  public let unit: String
+  public let status: String
+  public let value: String
+
+  public init<S: GrovePiInputSource>(source: S, value: String) {
+    self.port = source.portLabel.description
+    self.unit = source.inputUnit.description
+    self.status = source.delegatesCount > 0 ? "Sampling" : ""
+    self.value = value
+  }
+
+  public func makeNode(context: Context) throws -> Node {
+    return try Node(node: [
+      "port": port,
+      "unit": unit,
+      "status": status,
+      "value": value
+      ])
+  }
+
+}
 
 public final class GrovePiSensors {
   private let thSensor: TemperatureAndHumiditySensorSource
@@ -28,6 +53,16 @@ public final class GrovePiSensors {
 
   deinit {
     try? GrovePiBus.disconnectBus()
+  }
+
+  public func buildPortConnectionDescriptions() -> [PortConnectionDescription] {
+    var connections = [PortConnectionDescription]()
+    connections.append(PortConnectionDescription(source: thSensor, value: "temperature"))
+    connections.append(PortConnectionDescription(source: thSensor, value: "humidity"))
+    connections.append(PortConnectionDescription(source: urSensor, value: "distance"))
+    connections.append(PortConnectionDescription(source: lightSensor, value: "lightlevel"))
+    connections.append(PortConnectionDescription(source: soundSensor, value: "soundlevel"))
+    return connections
   }
 
   public func readTemperature() throws -> Float {

@@ -37,7 +37,9 @@ public final class DomusController: TextInputHandler {
     let host = request.uri.host
     let portExtension = request.uri.port != nil ? ":\(request.uri.port!)" : ""
     return try drop.view.make("domus", [
-      "wsuri": "ws://\(host)\(portExtension)/ws"])
+      "wsuri": "ws://\(host)\(portExtension)/ws".makeNode(),
+      "portconnections": sensors!.buildPortConnectionDescriptions().makeNode()
+      ])
   }
 
   private func start() throws {
@@ -105,7 +107,7 @@ public final class DomusController: TextInputHandler {
     do {
       try sensors?.onLightChange { lightLevel in
         do {
-          guard try self.outputHandler.send(text: String(key: "light", value: lightLevel))
+          guard try self.outputHandler.send(text: String(key: "lightlevel", value: lightLevel))
             else {
               print("Unable to output light: \(lightLevel)")
               self.sensors?.cancelLightChangeReport()
@@ -116,7 +118,7 @@ public final class DomusController: TextInputHandler {
         }
       }
     } catch {
-      _ = try? self.outputHandler.send(text: String(key: "light", value: error))
+      _ = try? self.outputHandler.send(text: String(key: "lightlevel", value: error))
       print("Failed to setup light sensor continuous status report due to error: \(error)")
     }
   }
