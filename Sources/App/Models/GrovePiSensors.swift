@@ -44,9 +44,10 @@ public final class GrovePiSensors {
   private var soundReporter: InputValueChangedReporter<Range1024>?
 
   public init() throws {
+    GrovePiBus.printCommands = true
     let bus = try GrovePiBus.connectBus()
-    thSensor = try bus.connectTemperatureAndHumiditySensor(to: .D7, moduleType: .blue, sampleTimeInterval: 60)
-    urSensor = try bus.connectUltrasonicRangerSensor(portLabel: .D3, sampleTimeInterval: 60)
+    thSensor = try bus.connectTemperatureAndHumiditySensor(to: .D7, moduleType: .blue, sampleTimeInterval: 1)
+    urSensor = try bus.connectUltrasonicRangerSensor(portLabel: .D4, sampleTimeInterval: 1)
     lightSensor = try bus.connectLightSensor(portLabel: .A0)
     soundSensor = try bus.connectSoundSensor(portLabel: .A1)
   }
