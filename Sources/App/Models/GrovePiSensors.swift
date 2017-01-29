@@ -33,7 +33,6 @@ public struct PortConnectionDescription: NodeRepresentable {
 
 }
 
-@available(OSX 10.12, *)
 public final class GrovePiSensors {
   private let thSensor: TemperatureAndHumiditySensorSource
   private let urSensor: UltrasonicRangerSensorSource

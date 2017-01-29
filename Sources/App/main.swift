@@ -21,13 +21,8 @@ var textIOConnector = TextIOConnector()
 let wsController = WebsocketController(inputHandler: textIOConnector)
 wsController.addRoutes(to: drop)
 
-if #available(OSX 10.12, *) {
-  let domusController = DomusController(outputHandler: textIOConnector)
-  textIOConnector.connect(inputSource: domusController, outputDestination: wsController)
-  domusController.addRoutes(to: drop)
-} else {
-  // Fallback on earlier versions
-  fatalError("@available did not work out well")
-}
+let domusController = DomusController(outputHandler: textIOConnector)
+textIOConnector.connect(inputSource: domusController, outputDestination: wsController)
+domusController.addRoutes(to: drop)
 
 drop.run()
