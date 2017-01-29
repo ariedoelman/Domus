@@ -33,6 +33,7 @@ public struct PortConnectionDescription: NodeRepresentable {
 
 }
 
+@available(OSX 10.12, *)
 public final class GrovePiSensors {
   private let thSensor: TemperatureAndHumiditySensorSource
   private let urSensor: UltrasonicRangerSensorSource
@@ -46,10 +47,10 @@ public final class GrovePiSensors {
   public init() throws {
     GrovePiBus.printCommands = true
     let bus = try GrovePiBus.connectBus()
-    thSensor = try bus.connectTemperatureAndHumiditySensor(to: .D7, moduleType: .blue, sampleTimeInterval: 1)
+    thSensor = try bus.connectTemperatureAndHumiditySensor(to: .D7, moduleType: .blue, sampleTimeInterval: 5)
     urSensor = try bus.connectUltrasonicRangerSensor(portLabel: .D4, sampleTimeInterval: 1)
-    lightSensor = try bus.connectLightSensor(portLabel: .A0)
-    soundSensor = try bus.connectSoundSensor(portLabel: .A1)
+    lightSensor = try bus.connectLightSensor(portLabel: .A0, sampleTimeInterval: 1)
+    soundSensor = try bus.connectSoundSensor(portLabel: .A1, sampleTimeInterval: 1)
   }
 
   deinit {
@@ -66,17 +67,17 @@ public final class GrovePiSensors {
     return connections
   }
 
-  public func readTemperature() throws -> Float {
-    return try thSensor.readValue().temperature
-  }
-
-  public func readHumidity() throws -> Float {
-    return try thSensor.readValue().humidity
-  }
-
-  public func readDistanceInCentimeters() throws -> DistanceInCentimeters {
-    return try urSensor.readValue()
-  }
+//  public func readTemperature() throws -> Float {
+//    return try thSensor.readValue().temperature
+//  }
+//
+//  public func readHumidity() throws -> Float {
+//    return try thSensor.readValue().humidity
+//  }
+//
+//  public func readDistanceInCentimeters() throws -> DistanceInCentimeters {
+//    return try urSensor.readValue()
+//  }
 
   public func onTemperatureAndHumidityChange(report: @escaping (TemperatureAndHumidity) -> ()) throws {
     guard thReporter == nil else { return }

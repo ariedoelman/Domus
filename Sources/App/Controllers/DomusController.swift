@@ -16,6 +16,7 @@ import HTTP
 import Socks
 import GrovePiIO
 
+@available(OSX 10.12, *)
 public final class DomusController: TextInputHandler {
   private let outputHandler: TextOutputHandler
   private var sensors: GrovePiSensors?
@@ -65,8 +66,11 @@ public final class DomusController: TextInputHandler {
     do {
       try sensors?.onTemperatureAndHumidityChange { th in
         do {
-          guard try self.outputHandler.send(text: String(key: "temperature", value: th.temperature)),
-            try self.outputHandler.send(text: String(key: "humidity", value: th.humidity))
+          let thFormatter = MeasurementFormatter()
+          thFormatter.unitOptions = .providedUnit
+          thFormatter.unitStyle = .medium
+          guard try self.outputHandler.send(text: String(key: "temperature", value: thFormatter.string(from: th.temperature))),
+            try self.outputHandler.send(text: String(key: "humidity", value: thFormatter.string(from: th.humidity)))
             else {
               print("Unable to output temperature and humidity: \(th)")
               self.sensors?.cancelTemperatureAndHumidityChangeReport()
@@ -161,9 +165,12 @@ public final class DomusController: TextInputHandler {
 }
 
 private extension String {
-  init(key: String, value: Float) {
+  init(key: String, value: String) {
     self.init("\(key)=\(value)")!
   }
+//  init(key: String, value: Float) {
+//    self.init("\(key)=\(value)")!
+//  }
   init(key: String, value: UInt16) {
     self.init("\(key)=\(value)")!
   }
