@@ -17,7 +17,7 @@
       </select>
     </div>
     <div class="three columns">
-      <input name="speed" class="u-full-width" placeholder="0...255" id="leftmotorgear"></input>
+      <input name="gear" class="u-full-width" placeholder="0...255" id="leftmotorgear"></input>
     </div>
     <div class="six columns">
       <input class="button-primary" type="button" value="Go"/ onclick="sendMotorGearAndDirection('left', 'leftmotorgear', 'leftmotordirection')">
@@ -34,7 +34,7 @@
       </select>
     </div>
     <div class="three columns">
-      <input name="speed" class="u-full-width" placeholder="0...255" id="rightmotorgear"></input>
+      <input name="gear" class="u-full-width" placeholder="0...255" id="rightmotorgear"></input>
     </div>
     <div class="six columns">
       <input class="button-primary" type="button" value="Go"/ onclick="sendMotorGearAndDirection('right', 'rightmotorgear', 'rightmotordirection')">

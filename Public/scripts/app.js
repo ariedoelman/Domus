@@ -45,6 +45,6 @@ function stopMotor(which) {
   socket.send("motor="+which+"\nstop=true");
 }
 
-function sendMotorGearAndDirection(which, directionId, gearId) {
-  socket.send("motor="+which+"\ndirection="+"="+document.getElementById(directionId).value + "\ngear="+document.getElementById(gearID).value);
+function sendMotorGearAndDirection(which, gearId, directionId) {
+  socket.send("motor="+which+"\ndirection="+document.getElementById(directionId).value + "\ngear="+document.getElementById(gearId).value);
 }

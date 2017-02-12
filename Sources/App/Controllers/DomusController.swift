@@ -46,7 +46,7 @@ public final class DomusController: TextInputHandler {
 
 
   private func start() throws {
-    GrovePiBus.printCommands = true
+//    GrovePiBus.printCommands = true
     if bus == nil {
       bus = try GrovePiBus.connectBus()
     }
@@ -68,6 +68,22 @@ public final class DomusController: TextInputHandler {
 
   public func received(text: String) {
     print("Received: \(text)")
+    guard let motorModel = self.motorModel else { return }
+    let motorControlSettings = text.parseDictionary()
+    do {
+      if let whichMotor = motorControlSettings["motor"], let motorSelection = MotorSelection(rawValue: whichMotor) {
+        if let _ = motorControlSettings["stop"] {
+          try motorModel.stopMotor(motorSelection: motorSelection)
+        } else if let gearValue = motorControlSettings["gear"], let gear = Range256(gearValue),
+          let directionValue = motorControlSettings["direction"], let direction = MotorDirection(rawValue: directionValue) {
+          try motorModel.updateDirectionAndSpeed(motorSelection: motorSelection, direction: direction, gear: gear)
+        } else {
+          print("Incorrect motor settings")
+        }
+      }
+    } catch {
+      print("Motor settings: \(error)")
+    }
   }
 
   public func closed() {
@@ -157,21 +173,6 @@ public final class DomusController: TextInputHandler {
     }
   }
 
-//  private func doSendStatus() {
-//    do {
-//      let sensorUpdates: [String] = [
-//          String(key: "temperature", value: try sensors.readTemperature()),
-//          String(key: "humidity", value: try sensors.readHumidity()),
-//          String(key: "distance", value: try sensors.readDistanceInCentimeters())
-//      ]
-//      guard (try sensorUpdates.first { return !(try outputHandler.send(text: $0)) }) == nil else {
-//        return
-//      }
-//    } catch {
-//      print("Stopped sending status")
-//    }
-//  }
-
 }
 
 private extension String {
@@ -183,5 +184,17 @@ private extension String {
   }
   init(key: String, value: Error) {
     self.init("\(key)=\(value)")!
+  }
+
+  func parseDictionary() -> [String:String] {
+    let lines = self.components(separatedBy: "\n")
+    var result = [String:String]()
+    for line in lines {
+      let keyValuePair = line.components(separatedBy: "=")
+      if keyValuePair.count >= 1 {
+        result[keyValuePair[0]] = keyValuePair.count > 1 ? keyValuePair[1] : ""
+      }
+    }
+    return result
   }
 }
