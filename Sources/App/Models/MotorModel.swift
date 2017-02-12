@@ -20,8 +20,8 @@ public final class MotorModel {
   public var leftMotorDirection: MotorDirection { return dualMotorSettings.motorA.direction! }
   public var leftMotorGear: Range256 { return dualMotorSettings.motorA.gear! }
   public var isLeftMotorStopped: Bool { return leftMotorGear == 0 }
-  public var rightMotorDirection: MotorDirection { return dualMotorSettings.motorA.direction! }
-  public var rightMotorGear: Range256 { return dualMotorSettings.motorA.gear! }
+  public var rightMotorDirection: MotorDirection { return dualMotorSettings.motorB.direction! }
+  public var rightMotorGear: Range256 { return dualMotorSettings.motorB.gear! }
   public var isRightMotorStopped: Bool { return rightMotorGear == 0 }
 
   public init(_ bus: GrovePiBus) throws {
@@ -73,7 +73,7 @@ public final class MotorModel {
       dualMotorSettings.motorA.gear = gearA
     }
     if let gearB = updatedDualMotorSettings.motorB.gear {
-      dualMotorSettings.motorA.gear = gearB
+      dualMotorSettings.motorB.gear = gearB
     }
   }
 

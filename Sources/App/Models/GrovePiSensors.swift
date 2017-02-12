@@ -46,7 +46,7 @@ public final class GrovePiSensors {
 
   public init(_ bus: GrovePiBus) throws {
 //    thSensor = try bus.connectTemperatureAndHumiditySensor(to: .D7, moduleType: .blue, sampleTimeInterval: 5)
-    urSensor = try bus.connectUltrasonicRangerSensor(portLabel: .D5, sampleTimeInterval: 1)
+    urSensor = try bus.connectUltrasonicRangerSensor(portLabel: .D5, sampleTimeInterval: 60)
 //    lightSensor = try bus.connectLightSensor(portLabel: .A0, sampleTimeInterval: 1)
 //    soundSensor = try bus.connectSoundSensor(portLabel: .A1, sampleTimeInterval: 1)
   }
