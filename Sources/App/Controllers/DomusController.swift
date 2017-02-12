@@ -46,7 +46,7 @@ public final class DomusController: TextInputHandler {
 
 
   private func start() throws {
-//    GrovePiBus.printCommands = true
+    GrovePiBus.printCommands = true
     if bus == nil {
       bus = try GrovePiBus.connectBus()
     }
@@ -60,10 +60,10 @@ public final class DomusController: TextInputHandler {
 
   public func opened() {
     print("Websockets opened")
-    receiveTemperatureAndHumidityChanges()
+//    receiveTemperatureAndHumidityChanges()
     receiveDistanceChanges()
-    receiveLightChanges()
-    receiveSoundChanges()
+//    receiveLightChanges()
+//    receiveSoundChanges()
   }
 
   public func received(text: String) {
@@ -91,27 +91,27 @@ public final class DomusController: TextInputHandler {
     sensors?.cancelAllReports()
   }
 
-  private func receiveTemperatureAndHumidityChanges() {
-    do {
-      try sensors?.onTemperatureAndHumidityChange { th in
-        do {
-          guard try self.outputHandler.send(text: String(key: "temperature", value: th.temperature)),
-            try self.outputHandler.send(text: String(key: "humidity", value: th.humidity))
-            else {
-              print("Unable to output temperature and humidity: \(th)")
-              self.sensors?.cancelTemperatureAndHumidityChangeReport()
-              return
-          }
-        } catch {
-          print("Stopped sending temperature and humidity status, due to error \(error)")
-        }
-      }
-    } catch {
-      _ = try? self.outputHandler.send(text: String(key: "temperature", value: error))
-      _ = try? self.outputHandler.send(text: String(key: "humidity", value: error))
-      print("Failed to setup temperature and humidity sensor continuous status report due to error: \(error)")
-    }
-  }
+//  private func receiveTemperatureAndHumidityChanges() {
+//    do {
+//      try sensors?.onTemperatureAndHumidityChange { th in
+//        do {
+//          guard try self.outputHandler.send(text: String(key: "temperature", value: th.temperature)),
+//            try self.outputHandler.send(text: String(key: "humidity", value: th.humidity))
+//            else {
+//              print("Unable to output temperature and humidity: \(th)")
+//              self.sensors?.cancelTemperatureAndHumidityChangeReport()
+//              return
+//          }
+//        } catch {
+//          print("Stopped sending temperature and humidity status, due to error \(error)")
+//        }
+//      }
+//    } catch {
+//      _ = try? self.outputHandler.send(text: String(key: "temperature", value: error))
+//      _ = try? self.outputHandler.send(text: String(key: "humidity", value: error))
+//      print("Failed to setup temperature and humidity sensor continuous status report due to error: \(error)")
+//    }
+//  }
 
   private func receiveDistanceChanges() {
     do {
@@ -133,45 +133,45 @@ public final class DomusController: TextInputHandler {
     }
   }
 
-  private func receiveLightChanges() {
-    do {
-      try sensors?.onLightChange { lightLevel in
-        do {
-          guard try self.outputHandler.send(text: String(key: "lightlevel", value: lightLevel))
-            else {
-              print("Unable to output light: \(lightLevel)")
-              self.sensors?.cancelLightChangeReport()
-              return
-          }
-        } catch {
-          print("Stopped sending light status, due to error \(error)")
-        }
-      }
-    } catch {
-      _ = try? self.outputHandler.send(text: String(key: "lightlevel", value: error))
-      print("Failed to setup light sensor continuous status report due to error: \(error)")
-    }
-  }
+//  private func receiveLightChanges() {
+//    do {
+//      try sensors?.onLightChange { lightLevel in
+//        do {
+//          guard try self.outputHandler.send(text: String(key: "lightlevel", value: lightLevel))
+//            else {
+//              print("Unable to output light: \(lightLevel)")
+//              self.sensors?.cancelLightChangeReport()
+//              return
+//          }
+//        } catch {
+//          print("Stopped sending light status, due to error \(error)")
+//        }
+//      }
+//    } catch {
+//      _ = try? self.outputHandler.send(text: String(key: "lightlevel", value: error))
+//      print("Failed to setup light sensor continuous status report due to error: \(error)")
+//    }
+//  }
 
-  private func receiveSoundChanges() {
-    do {
-      try sensors?.onSoundChange { soundLevel in
-        do {
-          guard try self.outputHandler.send(text: String(key: "soundlevel", value: soundLevel))
-            else {
-              print("Unable to output sound: \(soundLevel)")
-              self.sensors?.cancelSoundChangeReport()
-              return
-          }
-        } catch {
-          print("Stopped sending sound status, due to error \(error)")
-        }
-      }
-    } catch {
-      _ = try? self.outputHandler.send(text: String(key: "soundlevel", value: error))
-      print("Failed to setup sound sensor continuous status report due to error: \(error)")
-    }
-  }
+//  private func receiveSoundChanges() {
+//    do {
+//      try sensors?.onSoundChange { soundLevel in
+//        do {
+//          guard try self.outputHandler.send(text: String(key: "soundlevel", value: soundLevel))
+//            else {
+//              print("Unable to output sound: \(soundLevel)")
+//              self.sensors?.cancelSoundChangeReport()
+//              return
+//          }
+//        } catch {
+//          print("Stopped sending sound status, due to error \(error)")
+//        }
+//      }
+//    } catch {
+//      _ = try? self.outputHandler.send(text: String(key: "soundlevel", value: error))
+//      print("Failed to setup sound sensor continuous status report due to error: \(error)")
+//    }
+//  }
 
 }
 

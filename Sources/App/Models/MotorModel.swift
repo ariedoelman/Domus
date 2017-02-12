@@ -26,7 +26,7 @@ public final class MotorModel {
 
   public init(_ bus: GrovePiBus) throws {
     dualMotor = try bus.connectDualMotorDrive(portLabel: .I2C_2)
-    dualMotorSettings = DualMotorGearAndDirection(motorAB: MotorGearAndDirection(gear: 0, direction: .forward))
+    dualMotorSettings = DualMotorGearAndDirection(motorAB: MotorGearAndDirection(gear: 0, direction: .none))
   }
 
   public func updateDirectionAndSpeed(motorSelection: MotorSelection, direction: MotorDirection, gear: Range256) throws {
