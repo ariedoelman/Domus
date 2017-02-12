@@ -11,6 +11,7 @@ import HTTP
 public final class WebsocketController: TextOutputHandler {
   private let inputHandler: TextInputHandler
   private var websocket: WebSocket? = nil
+  private var oneWebsocketActionAtATime = Core.Lock()
 
   public init(inputHandler: TextInputHandler) {
     self.inputHandler = inputHandler
@@ -46,7 +47,9 @@ public final class WebsocketController: TextOutputHandler {
     guard let websocket = self.websocket else {
       return false
     }
-    try websocket.send(text)
+    try oneWebsocketActionAtATime.locked {
+      try websocket.send(text)
+    }
     return true
   }
 

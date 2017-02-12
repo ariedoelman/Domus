@@ -18,18 +18,20 @@ import GrovePiIO
 
 public final class DomusController: TextInputHandler {
   private let outputHandler: TextOutputHandler
+  private var bus: GrovePiBus?
   private var sensors: GrovePiSensors?
+  private var motorModel: MotorModel?
 
   public init(outputHandler: TextOutputHandler) {
     self.outputHandler = outputHandler
   }
 
-  public func addRoutes(to droplet: Droplet) {
-    droplet.get("domus", handler: showDomusView)
+  deinit {
+    try? GrovePiBus.disconnectBus()
   }
 
-  public func received(text: String) {
-    print("Received: \(text)")
+  public func addRoutes(to droplet: Droplet) {
+    droplet.get("domus", handler: showDomusView)
   }
 
   private func showDomusView(request: Request) throws -> ResponseRepresentable {
@@ -42,9 +44,17 @@ public final class DomusController: TextInputHandler {
       ])
   }
 
+
   private func start() throws {
+    GrovePiBus.printCommands = true
+    if bus == nil {
+      bus = try GrovePiBus.connectBus()
+    }
     if sensors == nil {
-      sensors = try GrovePiSensors()
+      sensors = try GrovePiSensors(bus!)
+    }
+    if motorModel == nil {
+      motorModel = try MotorModel(bus!)
     }
   }
 
@@ -54,6 +64,10 @@ public final class DomusController: TextInputHandler {
     receiveDistanceChanges()
     receiveLightChanges()
     receiveSoundChanges()
+  }
+
+  public func received(text: String) {
+    print("Received: \(text)")
   }
 
   public func closed() {

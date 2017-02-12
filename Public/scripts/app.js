@@ -1,8 +1,10 @@
+
+// Create a new WebSocket.
+var socket;
+
 window.onload = function() {
 
-  // Create a new WebSocket.
-  var socket = new WebSocket(wsUri);
-
+  socket = new WebSocket(wsUri);
 
   // Handle any errors that occur.
   socket.onerror = function(error) {
@@ -39,3 +41,10 @@ window.onload = function() {
   
 };
 
+function stopMotor(which) {
+  socket.send("motor="+which+"\nstop=true");
+}
+
+function sendMotorGearAndDirection(which, directionId, gearId) {
+  socket.send("motor="+which+"\ndirection="+"="+document.getElementById(directionId).value + "\ngear="+document.getElementById(gearID).value);
+}

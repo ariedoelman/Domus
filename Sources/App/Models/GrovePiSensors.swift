@@ -16,8 +16,8 @@ public struct PortConnectionDescription: NodeRepresentable {
   public let value: String
 
   public init<S: GrovePiInputSource>(source: S, value: String) {
-    self.port = source.portLabel.description
-    self.unit = source.inputUnit.description
+    self.port = source.portLabel.name
+    self.unit = source.inputUnit.name
     self.status = source.delegatesCount > 0 ? "Sampling" : ""
     self.value = value
   }
@@ -33,6 +33,7 @@ public struct PortConnectionDescription: NodeRepresentable {
 
 }
 
+
 public final class GrovePiSensors {
   private let thSensor: TemperatureAndHumiditySensorSource
   private let urSensor: UltrasonicRangerSensorSource
@@ -43,17 +44,11 @@ public final class GrovePiSensors {
   private var lightReporter: InputValueChangedReporter<Range1024>?
   private var soundReporter: InputValueChangedReporter<Range1024>?
 
-  public init() throws {
-    GrovePiBus.printCommands = true
-    let bus = try GrovePiBus.connectBus()
+  public init(_ bus: GrovePiBus) throws {
     thSensor = try bus.connectTemperatureAndHumiditySensor(to: .D7, moduleType: .blue, sampleTimeInterval: 5)
-    urSensor = try bus.connectUltrasonicRangerSensor(portLabel: .D4, sampleTimeInterval: 1)
+    urSensor = try bus.connectUltrasonicRangerSensor(portLabel: .D5, sampleTimeInterval: 1)
     lightSensor = try bus.connectLightSensor(portLabel: .A0, sampleTimeInterval: 1)
     soundSensor = try bus.connectSoundSensor(portLabel: .A1, sampleTimeInterval: 1)
-  }
-
-  deinit {
-    try? GrovePiBus.disconnectBus()
   }
 
   public func buildPortConnectionDescriptions() -> [PortConnectionDescription] {
@@ -65,18 +60,6 @@ public final class GrovePiSensors {
     connections.append(PortConnectionDescription(source: soundSensor, value: "soundlevel"))
     return connections
   }
-
-//  public func readTemperature() throws -> Float {
-//    return try thSensor.readValue().temperature
-//  }
-//
-//  public func readHumidity() throws -> Float {
-//    return try thSensor.readValue().humidity
-//  }
-//
-//  public func readDistanceInCentimeters() throws -> DistanceInCentimeters {
-//    return try urSensor.readValue()
-//  }
 
   public func onTemperatureAndHumidityChange(report: @escaping (TemperatureAndHumidity) -> ()) throws {
     guard thReporter == nil else { return }
