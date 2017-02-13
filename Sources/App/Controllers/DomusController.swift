@@ -70,16 +70,29 @@ public final class DomusController: TextInputHandler {
     print("Received: \(text)")
     guard let motorModel = self.motorModel else { return }
     let motorControlSettings = text.parseDictionary()
+    guard let startOrStop  = motorControlSettings["motorcontrol"] else {
+      return
+    }
     do {
-      if let whichMotor = motorControlSettings["motor"], let motorSelection = MotorSelection(rawValue: whichMotor) {
-        if let _ = motorControlSettings["stop"] {
-          try motorModel.stopMotor(motorSelection: motorSelection)
-        } else if let gearValue = motorControlSettings["gear"], let gear = Range256(gearValue),
-          let directionValue = motorControlSettings["direction"], let direction = MotorDirection(rawValue: directionValue) {
-          try motorModel.updateDirectionAndSpeed(motorSelection: motorSelection, direction: direction, gear: gear)
+      switch startOrStop {
+      case "start":
+        if let leftGearValue = motorControlSettings["leftgear"], let leftGear = Range256(leftGearValue),
+          let leftDirectionValue = motorControlSettings["leftdirection"],
+          let leftDirection = MotorDirection(rawValue: leftDirectionValue),
+          let rightGearValue = motorControlSettings["rightgear"], let rightGear = Range256(rightGearValue),
+          let rightDirectionValue = motorControlSettings["rightdirection"],
+          let rightDirection = MotorDirection(rawValue: rightDirectionValue)
+        {
+          try motorModel.updateDirectionAndSpeed(leftGear: leftGear, leftDirection: leftDirection,
+                                                 rightGear: rightGear, rightDirection: rightDirection)
         } else {
           print("Incorrect motor settings")
         }
+        break
+      case "stop":
+        try motorModel.stopMotors()
+      default:
+        print("Incorrect motor settings")
       }
     } catch {
       print("Motor settings: \(error)")

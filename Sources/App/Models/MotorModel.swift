@@ -9,10 +9,6 @@
 import Foundation
 import GrovePiIO
 
-public enum MotorSelection: String {
-  case left, right, both
-}
-
 public final class MotorModel {
   private let dualMotor: MotorDriveDestination
   private var dualMotorSettings: DualMotorGearAndDirection
@@ -29,39 +25,21 @@ public final class MotorModel {
     dualMotorSettings = DualMotorGearAndDirection(motorAB: MotorGearAndDirection(gear: 0, direction: .none))
   }
 
-  public func updateDirectionAndSpeed(motorSelection: MotorSelection, direction: MotorDirection, gear: Range256) throws {
+  public func updateDirectionAndSpeed(leftGear: Range256, leftDirection: MotorDirection,
+                                      rightGear: Range256, rightDirection: MotorDirection) throws {
     let updatedDualMotorSettings: DualMotorGearAndDirection
-    switch motorSelection {
-    case .left:
-      if direction == leftMotorDirection {
-        guard gear != leftMotorGear else { return }
-        updatedDualMotorSettings = DualMotorGearAndDirection(gearA: gear, gearB: rightMotorGear)
-      } else if gear == leftMotorGear {
-        updatedDualMotorSettings = DualMotorGearAndDirection(directionA: direction, directionB: rightMotorDirection)
+      if leftDirection == leftMotorDirection && rightDirection == rightMotorDirection {
+        guard leftGear != leftMotorGear || rightGear != rightMotorGear else {
+          return
+        }
+        updatedDualMotorSettings = DualMotorGearAndDirection(gearA: leftGear, gearB: rightGear)
+      } else if leftGear == leftMotorGear && rightGear == rightMotorGear {
+        updatedDualMotorSettings = DualMotorGearAndDirection(directionA: leftDirection, directionB: rightDirection)
       } else {
-        updatedDualMotorSettings = DualMotorGearAndDirection(motorA: MotorGearAndDirection(gear: gear, direction: direction),
-                                                             motorB: dualMotorSettings.motorB)
+        updatedDualMotorSettings = DualMotorGearAndDirection(motorA: MotorGearAndDirection(gear: leftGear, direction: leftDirection),
+                                                             motorB: MotorGearAndDirection(gear: rightGear, direction: rightDirection))
       }
-    case .right:
-      if direction == rightMotorDirection {
-        guard gear != rightMotorGear else { return }
-        updatedDualMotorSettings = DualMotorGearAndDirection(gearA: leftMotorGear, gearB: gear)
-      } else if gear == rightMotorGear {
-        updatedDualMotorSettings = DualMotorGearAndDirection(directionA: leftMotorDirection, directionB: direction)
-      } else {
-        updatedDualMotorSettings = DualMotorGearAndDirection(motorA: dualMotorSettings.motorA,
-                                                             motorB: MotorGearAndDirection(gear: gear, direction: direction))
-      }
-    case .both:
-      if direction == leftMotorDirection && direction == rightMotorDirection {
-        guard gear != leftMotorGear || gear != rightMotorGear else { return }
-        updatedDualMotorSettings = DualMotorGearAndDirection(gearAB: gear)
-      } else if gear == leftMotorGear && gear == rightMotorGear {
-        updatedDualMotorSettings = DualMotorGearAndDirection(directionAB: direction)
-      } else {
-        updatedDualMotorSettings = DualMotorGearAndDirection(motorAB: MotorGearAndDirection(gear: gear, direction: direction))
-      }
-    }
+
     try dualMotor.writeValue(updatedDualMotorSettings)
     if let directionA = updatedDualMotorSettings.motorA.direction {
       dualMotorSettings.motorA.direction = directionA
@@ -77,19 +55,9 @@ public final class MotorModel {
     }
   }
 
-  public func stopMotor(motorSelection: MotorSelection) throws {
-    let updatedDualMotorSettings: DualMotorGearAndDirection
-    switch motorSelection {
-    case .left:
-      guard !isLeftMotorStopped else { return }
-      updatedDualMotorSettings = DualMotorGearAndDirection(gearA: 0, gearB: rightMotorGear)
-    case .right:
-      guard !isRightMotorStopped else { return }
-      updatedDualMotorSettings = DualMotorGearAndDirection(gearA: leftMotorGear, gearB: 0)
-    case .both:
-      guard !isLeftMotorStopped && !isRightMotorStopped else { return }
-      updatedDualMotorSettings = DualMotorGearAndDirection(gearA: 0, gearB: 0)
-    }
+  public func stopMotors() throws {
+    guard !isLeftMotorStopped && !isRightMotorStopped else { return }
+    let updatedDualMotorSettings = DualMotorGearAndDirection(gearA: 0, gearB: 0)
     try dualMotor.writeValue(updatedDualMotorSettings)
     dualMotorSettings.motorA.gear = updatedDualMotorSettings.motorA.gear
     dualMotorSettings.motorB.gear = updatedDualMotorSettings.motorB.gear

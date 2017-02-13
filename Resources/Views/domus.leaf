@@ -8,7 +8,7 @@
 #export("body") {
 <h1>Motor control</h2>
 
-<form action="/leftmotor" method="post">
+<form>
   <div class="row">
     <div class="three columns">
       <select class="u-full-width" id="leftmotordirection">
@@ -20,12 +20,8 @@
       <input name="gear" class="u-full-width" placeholder="0...255" id="leftmotorgear"></input>
     </div>
     <div class="six columns">
-      <input class="button-primary" type="button" value="Go"/ onclick="sendMotorGearAndDirection('left', 'leftmotorgear', 'leftmotordirection')">
-      <input type="button" value="Stop" onclick="stopMotor('left')"/>
     </div>
   </div>
-</form>
-<form action="/rightmotor" method="post">
   <div class="row">
     <div class="three columns">
       <select class="u-full-width" id="rightmotordirection">
@@ -37,19 +33,14 @@
       <input name="gear" class="u-full-width" placeholder="0...255" id="rightmotorgear"></input>
     </div>
     <div class="six columns">
-      <input class="button-primary" type="button" value="Go"/ onclick="sendMotorGearAndDirection('right', 'rightmotorgear', 'rightmotordirection')">
-        <input type="button" value="Stop" onclick="stopMotor('right')"/>
-        </div>
+    </div>
   </div>
-</form>
-<form action="/startstopbothmotors" method="post">
   <div class="row">
-    <div class="three columns">
+    <div class="six columns">
+      <input class="button-primary" type="button" value="Go" onclick="controlMotors('leftmotorgear', 'leftmotordirection', 'rightmotorgear', 'rightmotordirection')"/>
     </div>
     <div class="six columns">
-      <input class="button-primary" type="button" value="Start/stop both motors"  onclick="stopMotor('both')"/>
-    </div>
-    <div class="three columns">
+      <input class="button" type="button" value="Stop" onclick="stopMotors()"/>
     </div>
   </div>
 </form>

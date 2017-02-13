@@ -41,10 +41,15 @@ window.onload = function() {
   
 };
 
-function stopMotor(which) {
-  socket.send("motor="+which+"\nstop=true");
+function stopMotors() {
+  socket.send("motorcontrol=stop");
 }
 
-function sendMotorGearAndDirection(which, gearId, directionId) {
-  socket.send("motor="+which+"\ndirection="+document.getElementById(directionId).value + "\ngear="+document.getElementById(gearId).value);
+function controlMotors(leftgearid, leftdirectionid, rightgearid, rightdirectionid) {
+  socket.send("motorcontrol=start"
+              + "\nleftgear="+document.getElementById(leftgearid).value
+              +"\nleftdirection="+document.getElementById(leftdirectionid).value
+              + "\nrightgear="+document.getElementById(rightgearid).value
+              +"\nrightdirection="+document.getElementById(rightdirectionid).value
+              );
 }
