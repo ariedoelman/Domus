@@ -56,7 +56,7 @@ public final class MotorModel {
   }
 
   public func stopMotors() throws {
-    guard !isLeftMotorStopped && !isRightMotorStopped else { return }
+    guard !isLeftMotorStopped || !isRightMotorStopped else { return }
     let updatedDualMotorSettings = DualMotorGearAndDirection(gearA: 0, gearB: 0)
     try dualMotor.writeValue(updatedDualMotorSettings)
     dualMotorSettings.motorA.gear = updatedDualMotorSettings.motorA.gear
