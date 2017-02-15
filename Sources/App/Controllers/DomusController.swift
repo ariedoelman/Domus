@@ -38,6 +38,8 @@ public final class DomusController: TextInputHandler {
     try start()
     let host = request.uri.host
     let portExtension = request.uri.port != nil ? ":\(request.uri.port!)" : ""
+    print("Make domus view")
+    defer { print("Domus view made") }
     return try drop.view.make("domus", [
       "wsuri": "ws://\(host)\(portExtension)/ws".makeNode(),
       "portconnections": sensors!.buildPortConnectionDescriptions().makeNode()
@@ -48,12 +50,15 @@ public final class DomusController: TextInputHandler {
   private func start() throws {
     GrovePiBus.printCommands = true
     if bus == nil {
+      print("Connecting Bus")
       bus = try GrovePiBus.connectBus()
     }
     if sensors == nil {
+      print("Connecting Sensors")
       sensors = try GrovePiSensors(bus!)
     }
     if motorModel == nil {
+      print("Connecting motor")
       motorModel = try MotorModel(bus!)
     }
   }
